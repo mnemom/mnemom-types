@@ -48,7 +48,7 @@ jobs:
 
       - name: TypeScript checks
         working-directory: typescript
-        run: npm ci && npm run typecheck && npm run build
+        run: npm install && npm run typecheck && npm run build
 
       - name: Python checks
         run: |
@@ -67,7 +67,7 @@ jobs:
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
-      - run: npm ci
+      - run: npm install
       - run: npm run build
       - run: npm publish --access public
         env:
