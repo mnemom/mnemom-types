@@ -75,3 +75,38 @@ export type {
   TeamRiskWeights,
   IndividualRiskWeights,
 } from './risk-constants';
+
+// Team types
+export type {
+  TeamStatus,
+  Team,
+  TeamMember,
+  RosterChangeType,
+  TeamRosterChange,
+  TeamCardSource,
+  TeamCoordinationMode,
+  TeamMemberRequirements,
+  TeamAlignmentCardMeta,
+  TeamReputationComponentKey,
+  TeamReputationComponent,
+  TeamReputationScore,
+  A2ATeamTrustExtension,
+  TeamReputationSnapshot,
+} from './team';
+
+// Team constants
+export {
+  TEAM_COMPONENT_WEIGHTS,
+  TEAM_ELIGIBILITY_THRESHOLD,
+  TEAM_MAX_SIZE,
+  TEAM_MIN_SIZE,
+  TEAM_MAX_ASSESSMENTS_PER_DAY,
+  TEAM_CONFIDENCE_THRESHOLDS,
+  CQ_MISSION_BLEND,
+  ROSTER_CHURN_PENALTY_PER_CHANGE,
+  ROSTER_CHURN_LOOKBACK_DAYS,
+} from './team-constants';
+
+export type {
+  TeamComponentWeightEntry,
+} from './team-constants';
