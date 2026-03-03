@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "lint": "eslint . && prettier --check .",
+    "lint:ts": "eslint . && prettier --check .",
+    "lint:py": "cd python && ruff check . && mypy src/"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "@eslint/js": "^9.0.0",
+    "typescript-eslint": "^8.0.0",
+    "eslint-config-prettier": "^10.0.0",
+    "prettier": "^3.0.0"
+  }
+}
