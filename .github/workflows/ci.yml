@@ -7,15 +7,19 @@ on:
     branches: [main]
   workflow_dispatch:
 
+
+permissions: {}
 jobs:
   typecheck-typescript:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: typescript
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
       - run: npm install
@@ -23,45 +27,53 @@ jobs:
       - run: npm run build
 
   test-typescript:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: typescript
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
       - run: npm ci
       - run: npx vitest run
 
   typecheck-python:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: ${{ matrix.python-version }}
       - run: pip install -e "python/[dev]" 2>/dev/null || pip install "python/"
       - run: python -c "from mnemom_types import ReputationScore, GRADE_ORDINALS; print('Import OK')"
 
   test-python:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: ${{ matrix.python-version }}
       - run: pip install -e "python/[dev]"
       - run: cd python && pytest
 
   dispatch-deploy:
+    permissions:
+      contents: read
     name: Trigger Deploy
     needs: [typecheck-typescript, typecheck-python, test-typescript, test-python]
     if: >-
@@ -70,14 +82,14 @@ jobs:
       !contains(needs.*.result, 'failure')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@d72941d797fd3113feb6b93fd0dec494b13a2547 # v1
         id: app-token
         with:
           app-id: ${{ secrets.DEPLOY_APP_ID }}
           private-key: ${{ secrets.DEPLOY_APP_PRIVATE_KEY }}
           owner: mnemom
 
-      - uses: peter-evans/repository-dispatch@v3
+      - uses: peter-evans/repository-dispatch@ff45666b9427631e3450c54a1bcbee4d9ff4d7c0 # v3
         with:
           token: ${{ steps.app-token.outputs.token }}
           repository: mnemom/deploy
@@ -90,10 +102,12 @@ jobs:
             }
 
   lint-typescript:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
       - run: npm ci
@@ -102,10 +116,12 @@ jobs:
         continue-on-error: true
 
   lint-python:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.12"
       - run: pip install ruff mypy
