@@ -22,6 +22,19 @@ jobs:
       - run: npm run typecheck
       - run: npm run build
 
+  test-typescript:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: typescript
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+      - run: npx vitest run
+
   typecheck-python:
     runs-on: ubuntu-latest
     strategy:
@@ -35,9 +48,22 @@ jobs:
       - run: pip install -e "python/[dev]" 2>/dev/null || pip install "python/"
       - run: python -c "from mnemom_types import ReputationScore, GRADE_ORDINALS; print('Import OK')"
 
+  test-python:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -e "python/[dev]"
+      - run: cd python && pytest
+
   dispatch-deploy:
     name: Trigger Deploy
-    needs: [typecheck-typescript, typecheck-python]
+    needs: [typecheck-typescript, typecheck-python, test-typescript, test-python]
     if: >-
       always() &&
       github.event_name == 'push' &&

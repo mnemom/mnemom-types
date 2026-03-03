@@ -33,13 +33,33 @@ dependencies = [
     "pydantic>=2.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
 [project.urls]
 Homepage = "https://github.com/mnemom/mnemom-types"
 Repository = "https://github.com/mnemom/mnemom-types.git"
 Issues = "https://github.com/mnemom/mnemom-types/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 [tool.hatch.build.targets.sdist]
 include = ["/src"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/mnemom_types"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "A", "SIM"]
+ignore = ["E501"]
+
+[tool.mypy]
+strict = true
+python_version = "3.10"
