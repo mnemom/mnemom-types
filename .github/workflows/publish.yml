@@ -15,16 +15,20 @@ on:
         type: string
         default: "typescript"
 
+
+permissions: {}
 jobs:
   # ── Release-triggered publishing (existing) ──
 
   validate:
+    permissions:
+      contents: read
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Extract version from tag
         id: version
         run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
@@ -48,14 +52,16 @@ jobs:
           fi
 
   test:
+    permissions:
+      contents: read
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.12"
       - name: TypeScript checks
@@ -67,6 +73,8 @@ jobs:
           python -c "from mnemom_types import ReputationScore, GRADE_ORDINALS, COMPONENT_WEIGHTS; print('All imports OK')"
 
   publish-npm:
+    permissions:
+      contents: read
     needs: [validate, test]
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
@@ -74,8 +82,8 @@ jobs:
       run:
         working-directory: typescript
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
@@ -86,6 +94,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish-pypi:
+    permissions:
+      contents: read
     needs: [validate, test]
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
@@ -93,8 +103,8 @@ jobs:
       run:
         working-directory: python
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.12"
       - run: pip install build twine
@@ -107,11 +117,13 @@ jobs:
   # ── Orchestrator dispatch publishing ──
 
   dispatch-publish:
+    permissions:
+      contents: read
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
