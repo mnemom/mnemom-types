@@ -125,7 +125,15 @@ jobs:
     # mnemom/.github @ scale/step-29-reusable-npm-publish merge (ADR-020)
     uses: mnemom/.github/.github/workflows/npm-publish.yml@d2a3ba746b61b4dd0f44e75d2eb62231004ad022
     with:
-      npm-directory: ${{ inputs.npm-directory }}
-      dispatch-id: ${{ inputs.dispatch-id }}
+      # Defensive defaults: GitHub Actions validates `with:` expressions at
+      # workflow load time, before the job-level `if:` is evaluated. On a
+      # release event the `inputs` context is empty, so a bare
+      # `${{ inputs.npm-directory }}` resolves to "" — which fails the
+      # reusable workflow's required-string input validation and causes a
+      # workflow startup_failure. The `||` fallback keeps the expression
+      # valid on both event types; the `if:` above still skips this job on
+      # non-dispatch events.
+      npm-directory: ${{ inputs.npm-directory || 'typescript' }}
+      dispatch-id: ${{ inputs.dispatch-id || '' }}
       tag: latest
       attach-sbom-to-release: false   # dispatch path has no release to attach to
