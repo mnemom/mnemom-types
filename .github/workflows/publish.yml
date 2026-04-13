@@ -119,8 +119,15 @@ jobs:
 
   dispatch-publish:
     if: github.event_name == 'workflow_dispatch'
+    # NOTE: contents: write is over-granted relative to what dispatch-publish
+    # actually does (the `gh release upload` step inside the reusable workflow
+    # is gated on `github.event_name == 'release'` and never runs here). But
+    # GitHub validates the caller's declared permissions against the called
+    # workflow's declared permissions at workflow load time, before any `if:`
+    # is evaluated. The reusable workflow declares `contents: write` because
+    # the release-attach step *may* need it; callers must grant the union.
     permissions:
-      contents: read
+      contents: write
       id-token: write
     # mnemom/.github @ scale/step-29-reusable-npm-publish merge (ADR-020)
     uses: mnemom/.github/.github/workflows/npm-publish.yml@d2a3ba746b61b4dd0f44e75d2eb62231004ad022
