@@ -4,7 +4,6 @@
   "packages": {
     "typescript": {
       "package-name": "@mnemom/types",
-      "changelog-path": "../CHANGELOG.md",
       "include-component-in-tag": false
     }
   },
