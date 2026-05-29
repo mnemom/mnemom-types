@@ -110,3 +110,18 @@ export {
 export type {
   TeamComponentWeightEntry,
 } from './team-constants';
+
+// Canonical error envelope (cross-service single source of truth).
+// parseMnemomError + MnemomError are the package's ONE deliberate runtime
+// helper — the single shared error parser for the whole fleet (see AGENTS.md).
+export type {
+  SpecDeviation,
+  ErrorEnvelope,
+  ParsedMnemomError,
+  MnemomErrorFields,
+} from './errors';
+
+export {
+  parseMnemomError,
+  MnemomError,
+} from './errors';

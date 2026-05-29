@@ -74,10 +74,17 @@ README.md                 # User-facing usage docs
   `typescript/package.json::version` and
   `python/pyproject.toml::project.version` together.
 - **Apache-2.0 only.**
-- This package is **types-only** — no runtime logic, no I/O, no
-  side effects. If you find yourself adding logic, it belongs in a
-  consumer (mnemom-reputation, mnemom-website's `lib/reputation.ts`,
-  etc.), not here.
+- This package is **types + constants + ONE canonical error parser** —
+  otherwise no runtime logic, no I/O, no side effects. The single
+  deliberate exception is `src/errors.ts` / `errors.py`
+  (`parseMnemomError` / `parse_mnemom_error` + the `MnemomError`
+  shape): the fleet-wide error-envelope parser, dependency-free, kept
+  here ON PURPOSE so every consumer (CLI, SDK, website, risk,
+  reputation) imports ONE nested-first parser instead of five drifting
+  copies. Do NOT add OTHER runtime logic — that belongs in a consumer
+  (mnemom-reputation, mnemom-website's `lib/reputation.ts`, etc.). And
+  do NOT delete the error parser as a "types-only violation" — it is
+  load-bearing shared infrastructure.
 - Commit messages: imperative, concise, describe the **why**.
 
 ## Branch protection + deploy
@@ -89,7 +96,9 @@ README.md                 # User-facing usage docs
 
 ## What you should NOT do
 
-- Don't add runtime dependencies. This is types + constants, period.
+- Don't add runtime dependencies. This is types + constants + the one
+  canonical error parser (`src/errors.ts` / `errors.py`) — and that
+  parser stays dependency-free. No new deps.
 - Don't drift TypeScript and Python apart.
 - Don't break wire compatibility (rename a grade, bump score
   boundaries) without coordinating across every consumer.

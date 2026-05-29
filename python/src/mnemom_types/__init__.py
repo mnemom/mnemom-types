@@ -14,6 +14,14 @@ from mnemom_types.constants import (
     ComponentWeightEntry,
     GradeScaleEntry,
 )
+from mnemom_types.errors import (
+    ErrorBody,
+    ErrorEnvelope,
+    MnemomError,
+    ParsedMnemomError,
+    SpecDeviation,
+    parse_mnemom_error,
+)
 from mnemom_types.gate import GateResult, ReputationGateConfig
 from mnemom_types.reputation import (
     A2ATrustExtension,
@@ -157,4 +165,11 @@ __all__ = [
     "ROSTER_CHURN_PENALTY_PER_CHANGE",
     "ROSTER_CHURN_LOOKBACK_DAYS",
     "TeamComponentWeightEntry",
+    # Canonical error envelope (cross-service)
+    "SpecDeviation",
+    "ErrorBody",
+    "ErrorEnvelope",
+    "ParsedMnemomError",
+    "parse_mnemom_error",
+    "MnemomError",
 ]

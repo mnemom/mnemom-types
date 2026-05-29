@@ -4,6 +4,13 @@ import mnemom_types
 
 
 EXPECTED_EXPORTS = [
+    # Canonical error envelope (cross-service)
+    "SpecDeviation",
+    "ErrorBody",
+    "ErrorEnvelope",
+    "ParsedMnemomError",
+    "parse_mnemom_error",
+    "MnemomError",
     # Reputation types
     "ReputationGrade",
     "ConfidenceLevel",
