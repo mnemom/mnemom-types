@@ -18,6 +18,7 @@ jobs:
       actions: read
       contents: read
       security-events: write
-    uses: mnemom/.github/.github/workflows/security-scan.yml@main
+    # mnemom/.github @ main (Scorecard Pinned-Dependencies — pin to SHA)
+    uses: mnemom/.github/.github/workflows/security-scan.yml@39adcd3176781a5bb748cd8c9748c962d68b18bf
     with:
       languages: "javascript-typescript,python"
