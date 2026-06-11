@@ -7,6 +7,19 @@
 
 import type { ReputationGrade } from './reputation';
 
+/**
+ * Canonical version of the reputation rubric defined by GRADE_SCALE +
+ * COMPONENT_WEIGHTS below. This is the SINGLE SOURCE OF TRUTH for the rubric
+ * version — surfaced by the MCP resource `mnemom://rubric/reputation/version`
+ * and any "what rubric produced this score" disclosure. Bump (semver) ONLY when
+ * the grade boundaries or component weights change; a bump signals a scoring
+ * methodology change to every consumer (API, SDKs, reputation worker, dashboard).
+ *
+ * 1.0.0 = the first explicit tag of the live rubric (5 weighted components,
+ * AAA…CCC grade scale) — no scoring change, just formal versioning.
+ */
+export const RUBRIC_VERSION = '1.0.0' as const;
+
 /** Ordinal ranking of reputation grades (higher = better). */
 export const GRADE_ORDINALS: Record<ReputationGrade, number> = {
   AAA: 7,

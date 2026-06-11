@@ -1,10 +1,23 @@
 import { describe, it, expect } from 'vitest';
 
 import {
+  RUBRIC_VERSION,
   GRADE_ORDINALS,
   GRADE_SCALE,
   COMPONENT_WEIGHTS,
 } from '../index';
+
+describe('RUBRIC_VERSION', () => {
+  it('is a semver string tagging the current rubric', () => {
+    expect(typeof RUBRIC_VERSION).toBe('string');
+    expect(RUBRIC_VERSION).toMatch(/^\d+\.\d+\.\d+$/);
+  });
+
+  it('component weights sum to 1.0 (the rubric this version tags is well-formed)', () => {
+    const total = COMPONENT_WEIGHTS.reduce((s, c) => s + c.weight, 0);
+    expect(Math.abs(total - 1)).toBeLessThan(1e-9);
+  });
+});
 
 describe('GRADE_ORDINALS', () => {
   it('contains all 8 grades', () => {

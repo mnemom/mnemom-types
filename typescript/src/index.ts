@@ -25,6 +25,7 @@ export type {
 
 // Constants
 export {
+  RUBRIC_VERSION,
   GRADE_ORDINALS,
   GRADE_SCALE,
   COMPONENT_WEIGHTS,
