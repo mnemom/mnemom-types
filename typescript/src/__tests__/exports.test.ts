@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import {
+  RUBRIC_VERSION,
   GRADE_ORDINALS,
   GRADE_SCALE,
   COMPONENT_WEIGHTS,
@@ -28,6 +29,7 @@ import {
 
 describe('export completeness', () => {
   it('exports all reputation constants', () => {
+    expect(RUBRIC_VERSION).toBeDefined();
     expect(GRADE_ORDINALS).toBeDefined();
     expect(GRADE_SCALE).toBeDefined();
     expect(COMPONENT_WEIGHTS).toBeDefined();
