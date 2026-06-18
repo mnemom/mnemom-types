@@ -1,6 +1,7 @@
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import eslintConfigPrettier from "eslint-config-prettier";
+import globals from "globals";
 
 export default tseslint.config(
   {
@@ -40,6 +41,17 @@ export default tseslint.config(
       "no-console": "off",
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
+    },
+  },
+  {
+    // Node CLI scripts (the api-surface breaking-diff gate): Node globals, and
+    // console is the intended output channel.
+    files: ["**/scripts/**/*.mjs"],
+    languageOptions: {
+      globals: globals.node,
+    },
+    rules: {
+      "no-console": "off",
     },
   },
 );

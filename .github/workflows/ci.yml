@@ -41,6 +41,28 @@ jobs:
       - run: npm ci
       - run: npx vitest run
 
+  # Breaking-diff gate for the public API surface (MNE-492). Regenerates the
+  # exported-symbol surface from src/ and diffs it against the committed baseline
+  # (typescript/api-surface.txt). FAILS on any non-additive change (removal,
+  # rename, type/optionality change); additive changes pass. Intentionally
+  # conservative — see typescript/scripts/api-surface/README.md. To land an
+  # intended breaking change, regenerate + commit the baseline in the same PR
+  # (`npm run api:surface`) alongside the MAJOR bump.
+  api-surface-gate:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: typescript
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: "20"
+      - run: npm ci
+      - run: npm run api:surface:check
+
   typecheck-python:
     permissions:
       contents: read

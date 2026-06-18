@@ -20,7 +20,9 @@
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "api:surface": "node scripts/api-surface/extract-surface.mjs src/index.ts --out api-surface.txt",
+    "api:surface:check": "node scripts/api-surface/extract-surface.mjs src/index.ts --out api-surface.current.txt && node scripts/api-surface/diff-surface.mjs --baseline api-surface.txt --current api-surface.current.txt"
   },
   "keywords": [
     "mnemom",
