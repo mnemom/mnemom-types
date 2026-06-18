@@ -1,5 +1,7 @@
 node_modules/
 dist/
+# transient output of the api-surface breaking-diff gate (typescript/api-surface.txt IS committed)
+typescript/api-surface.current.txt
 *.tgz
 .DS_Store
 __pycache__/
