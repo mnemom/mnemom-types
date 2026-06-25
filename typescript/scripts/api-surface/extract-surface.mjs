@@ -101,7 +101,9 @@ function renderType(checker, type, location, depth) {
     .map((prop) => {
       const optional = (prop.getFlags() & ts.SymbolFlags.Optional) !== 0;
       const decl = prop.valueDeclaration || (prop.declarations && prop.declarations[0]);
-      let memberType = "unknown";
+      // Always assigned below (try sets it; catch falls back to "unknown"),
+      // so no initializer — satisfies ESLint v10's no-useless-assignment rule.
+      let memberType;
       try {
         const t = checker.getTypeOfSymbolAtLocation(prop, decl || location);
         memberType = renderType(checker, t, decl || location, depth + 1);
