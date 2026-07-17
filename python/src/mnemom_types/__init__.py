@@ -63,6 +63,11 @@ from mnemom_types.team import (
     TeamStatus,
     RosterChangeType,
 )
+from mnemom_types.verdict import (
+    CheckpointVerdicts,
+    MnemomAdvisory,
+    VerdictValue,
+)
 from mnemom_types.team_constants import (
     CQ_MISSION_BLEND,
     ROSTER_CHURN_LOOKBACK_DAYS,
@@ -172,4 +177,8 @@ __all__ = [
     "ParsedMnemomError",
     "parse_mnemom_error",
     "MnemomError",
+    # Gateway verdict/advisory vocabulary
+    "VerdictValue",
+    "CheckpointVerdicts",
+    "MnemomAdvisory",
 ]

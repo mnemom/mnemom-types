@@ -27,6 +27,8 @@ from mnemom_types import (
     TeamReputationScore,
     TeamReputationSnapshot,
     A2ATeamTrustExtension,
+    CheckpointVerdicts,
+    MnemomAdvisory,
 )
 
 
@@ -447,3 +449,30 @@ class TestA2ATeamTrustExtension:
         )
         assert ext.extension_uri == "https://mnemom.ai/ext/team-trust/v1"
         assert ext.provider == "mnemom"
+
+
+class TestCheckpointVerdicts:
+    def test_valid_all_axes(self):
+        cv = CheckpointVerdicts(front="pass", autonomy="nudged", integrity="unverified", back="pass")
+        assert cv.integrity == "unverified"
+
+    def test_rejects_unknown_value(self):
+        with pytest.raises(ValidationError):
+            CheckpointVerdicts(front="pass", autonomy="pass", integrity="pass", back="not-a-verdict")
+
+    def test_round_trip(self):
+        cv = CheckpointVerdicts(front="pass", autonomy="pass", integrity="enforced", back="observed")
+        restored = CheckpointVerdicts.model_validate_json(cv.model_dump_json())
+        assert restored == cv
+
+
+class TestMnemomAdvisory:
+    def test_minimal(self):
+        adv = MnemomAdvisory(source="safe-house", text="quarantined a canary read")
+        assert adv.severity is None
+        assert adv.id is None
+
+    def test_full(self):
+        adv = MnemomAdvisory(source="aip", text="boundary violation", severity="critical", id="adv-1")
+        restored = MnemomAdvisory.model_validate_json(adv.model_dump_json())
+        assert restored == adv
