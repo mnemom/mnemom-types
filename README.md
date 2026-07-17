@@ -64,8 +64,23 @@ def is_above(score: ReputationScore, grade: ReputationGrade) -> bool:
 - **`mnemom-risk`** — risk assessment inputs and outputs
 - **`reputation-check`** — the GitHub Action's input/output contract
 - **`aap`, `aip`** — SDK clients that query or verify reputation
+- **`mnemom-website`** — `RiskMethodology.tsx` imports the canonical risk constants (MNE-492 Slice 2)
+- **`mnemom-platform`** — `shared/sdk` imports the canonical error envelope (`parseMnemomError`)
 
 When these shapes change, they change here first and every downstream repo bumps its `@mnemom/types` / `mnemom-types` dependency in lockstep.
+
+## Breaking-diff gate (MNE-492)
+
+`api-surface-gate` (`.github/workflows/ci.yml`) regenerates the exported-symbol surface of
+`typescript/src/index.ts` and diffs it against the committed baseline (`typescript/api-surface.txt`),
+failing on any non-additive change (removed export, renamed export, kind/type change). It has run
+on every PR since #61 and has not needed a false-positive override.
+
+It is currently **advisory** — not yet in `main`'s required status checks
+(`scripts/branch-protection/required-checks.json` records the intended target list, which adds
+`api-surface-gate` to the existing four). Promoting it is a deliberate, human-run action —
+`scripts/branch-protection/apply-required-checks.sh` — not something CI or this PR merge does
+automatically.
 
 ## Development
 

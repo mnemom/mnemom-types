@@ -1,0 +1,14 @@
+{
+  "_comment": "Declarative record of mnemom-types' intended main-branch required status checks (MNE-492). GitHub branch protection is not natively version-controlled, so this file + apply-required-checks.sh is the reviewable 'config as code' artifact for it. Not auto-applied by CI — a human runs the script after reviewing this PR.",
+  "branch": "main",
+  "required_status_checks": {
+    "strict": false,
+    "contexts": [
+      "typecheck-python (3.10)",
+      "typecheck-python (3.11)",
+      "typecheck-python (3.12)",
+      "typecheck-typescript",
+      "api-surface-gate"
+    ]
+  }
+}
