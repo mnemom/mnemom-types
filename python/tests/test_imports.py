@@ -83,6 +83,10 @@ EXPECTED_EXPORTS = [
     "ROSTER_CHURN_PENALTY_PER_CHANGE",
     "ROSTER_CHURN_LOOKBACK_DAYS",
     "TeamComponentWeightEntry",
+    # Gateway verdict/advisory vocabulary
+    "VerdictValue",
+    "CheckpointVerdicts",
+    "MnemomAdvisory",
 ]
 
 
@@ -114,6 +118,7 @@ def test_submodule_imports():
     from mnemom_types import team
     from mnemom_types import team_constants
     from mnemom_types import a2a
+    from mnemom_types import verdict
 
     assert hasattr(reputation, "ReputationScore")
     assert hasattr(gate, "GateResult")
@@ -123,3 +128,4 @@ def test_submodule_imports():
     assert hasattr(team, "Team")
     assert hasattr(team_constants, "TEAM_COMPONENT_WEIGHTS")
     assert hasattr(a2a, "A2ATrustExtension")
+    assert hasattr(verdict, "CheckpointVerdicts")

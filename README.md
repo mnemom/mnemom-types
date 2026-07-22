@@ -29,6 +29,7 @@ pip install mnemom-types
 | `risk` | `RiskLevel`, `RiskRecommendation`, `TeamRecommendation`, and assessment payload shapes |
 | `team` | `Team`, `TeamStatus`, `TeamReputationScore`, and roster types |
 | `constants` | `GRADE_ORDINALS`, `GRADE_SCALE` (tier names + score ranges), `COMPONENT_WEIGHTS` |
+| `verdict` | `VerdictValue`, `CheckpointVerdicts`, `MnemomAdvisory` — the canonical `X-Mnemom-Verdict` / `X-Mnemom-Advisory` gateway header shape |
 
 ## Usage
 

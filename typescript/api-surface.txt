@@ -1,12 +1,13 @@
 # @mnemom/types public API surface — GENERATED, do not hand-edit.
 # Regenerate: npm run api:surface (extracts from src/index.ts via tsc).
 # Format: <name>\t<kind>\t<normalized-type>. One exported symbol per line.
-# Export count: 73
+# Export count: 76
 A2ATeamTrustExtension	interface	{ badge_url: string; confidence: "insufficient" | "low" | "medium" | "high"; extension_uri: "https://mnemom.ai/ext/team-trust/v1"; grade: "AAA" | "AA" | "A" | "BBB" | "BB" | "B" | "CCC" | "NR"; last_updated: string; member_count: number; methodology_url: string; provider: "mnemom"; score: number; verified_url: string }
 A2ATrustExtension	interface	{ badge_url: string; confidence: "insufficient" | "low" | "medium" | "high"; extension_uri: string; grade: "AAA" | "AA" | "A" | "BBB" | "BB" | "B" | "CCC" | "NR"; last_updated: string; methodology_url: string; provider: string; score: number; verified_url: string }
 ACTION_TYPE_PROFILES	value	{ autonomous_operation: { coherence_compatibility: number; compliance: number; drift_stability: number; integrity_ratio: number; trace_completeness: number }; data_access: { coherence_compatibility: number; compliance: number; drift_stability: number; integrity_ratio: number; trace_completeness: number }; financial_transaction: { coherence_compatibility: number; compliance: number; drift_stability: number; integrity_ratio: number; trace_completeness: number }; multi_agent_coordination: { coherence_compatibility: number; compliance: number; drift_stability: number; integrity_ratio: number; trace_completeness: number }; task_delegation: { coherence_compatibility: number; compliance: number; drift_stability: number; integrity_ratio: number; trace_completeness: number }; tool_invocation: { coherence_compatibility: number; compliance: number; drift_stability: number; integrity_ratio: number; trace_completeness: number } }
 ActionType	type	"financial_transaction" | "data_access" | "task_delegation" | "tool_invocation" | "autonomous_operation" | "multi_agent_coordination"
 ActionTypeProfile	interface	{ coherence_compatibility: number; compliance: number; drift_stability: number; integrity_ratio: number; trace_completeness: number }
+CheckpointVerdicts	interface	{ autonomy: "pass" | "observed" | "nudged" | "enforced" | "unverified"; back: "pass" | "observed" | "nudged" | "enforced" | "unverified"; front: "pass" | "observed" | "nudged" | "enforced" | "unverified"; integrity: "pass" | "observed" | "nudged" | "enforced" | "unverified" }
 CIRCUIT_BREAKER_MIN_BOUNDARY_COMPAT	value	{ toExponential: (fractionDigits?: number) => string; toFixed: (fractionDigits?: number) => string; toLocaleString: { (locales?: string | string[], options?: Intl.NumberFormatOptions): string; (locales?: Intl.LocalesArgument, options?: Intl.NumberFormatOptions): string; }; toPrecision: (precision?: number) => string; toString: (radix?: number) => string; valueOf: () => number }
 CIRCUIT_BREAKER_MIN_REPUTATION	value	{ toExponential: (fractionDigits?: number) => string; toFixed: (fractionDigits?: number) => string; toLocaleString: { (locales?: string | string[], options?: Intl.NumberFormatOptions): string; (locales?: Intl.LocalesArgument, options?: Intl.NumberFormatOptions): string; }; toPrecision: (precision?: number) => string; toString: (radix?: number) => string; valueOf: () => number }
 COHERENCE_SUBWEIGHTS	value	{ behavioral_corr_penalty: 0.15; boundary_compatibility: 0.25; priority_alignment: 0.25; value_overlap: 0.35 }
@@ -24,6 +25,7 @@ GRADE_SCALE	value	{ __@iterator@11: () => ArrayIterator<import("constants").Grad
 GradeScaleEntry	interface	{ grade: "AAA" | "AA" | "A" | "BBB" | "BB" | "B" | "CCC" | "NR"; max: number; min: number; tier: string }
 INDIVIDUAL_RISK_WEIGHTS	value	{ confidence_penalty: number; context: number; recency: number }
 IndividualRiskWeights	interface	{ confidence_penalty: number; context: number; recency: number }
+MnemomAdvisory	interface	{ id?: string | undefined; severity?: "critical" | "info" | "warn" | undefined; source: string; text: string }
 MnemomError	class	{ code?: string | undefined; details?: unknown; effectiveStatus?: number | undefined; message: string; name: string; specDeviation?: SpecDeviation | undefined; stack?: string | undefined; status?: number | undefined }
 MnemomErrorFields	interface	{ code?: string | undefined; details?: unknown; effectiveStatus?: number | undefined; specDeviation?: SpecDeviation | undefined; status?: number | undefined }
 ParsedMnemomError	interface	{ code?: string | undefined; details?: unknown; message?: string | undefined; specDeviation?: SpecDeviation | undefined }
@@ -74,4 +76,5 @@ TeamRiskWeights	interface	{ coherence: number; concentration: number; portfolio:
 TeamRosterChange	interface	{ actor_id: string | null; agent_id: string; change_type: "agent_added" | "agent_removed"; created_at: string; id: string; team_id: string }
 TeamStatus	type	"active" | "archived"
 ValueDivergence	interface	{ conflicting_agents: Array<string>; declaring_agents: Array<string>; missing_agents: Array<string>; risk_impact: number; value: string }
+VerdictValue	type	"pass" | "observed" | "nudged" | "enforced" | "unverified"
 VIOLATION_SEVERITY_WEIGHTS	value	{ [x: string]: number; }

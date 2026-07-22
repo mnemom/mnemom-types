@@ -126,3 +126,11 @@ export {
   parseMnemomError,
   MnemomError,
 } from './errors';
+
+// Gateway verdict/advisory vocabulary (canonical X-Mnemom-Verdict /
+// X-Mnemom-Advisory header shape — see verdict.ts doc comment).
+export type {
+  VerdictValue,
+  CheckpointVerdicts,
+  MnemomAdvisory,
+} from './verdict';
