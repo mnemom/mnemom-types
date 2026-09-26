@@ -82,10 +82,14 @@ jobs:
           python-version: "3.12"
       - name: TypeScript checks
         working-directory: typescript
-        run: npm install && npm run typecheck && npm run build
+        run: npm ci && npm run typecheck && npm run build
       - name: Python checks
+        # Hash-pinned (OpenSSF Scorecard Pinned-Dependencies). Still a regular,
+        # non-editable install of the built wheel, so packaging is what gets checked.
         run: |
-          pip install "python/"
+          python -m pip install --require-hashes -r .github/requirements/python-dev.txt
+          python -m pip wheel --no-deps -w "$RUNNER_TEMP/wheels" python/
+          python -m pip install --no-deps "$RUNNER_TEMP"/wheels/*.whl
           python -c "from mnemom_types import ReputationScore, GRADE_ORDINALS, COMPONENT_WEIGHTS; print('All imports OK')"
 
   publish-npm:
@@ -122,8 +126,8 @@ jobs:
       - name: Build sdist + wheel
         working-directory: python
         run: |
-          python -m pip install --upgrade pip
-          pip install build
+          # Hash-pinned build frontend (OpenSSF Scorecard Pinned-Dependencies).
+          python -m pip install --require-hashes -r "$GITHUB_WORKSPACE/.github/requirements/build.txt"
           python -m build
       - name: Publish to PyPI (Trusted Publisher)
         uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # release/v1
@@ -212,8 +216,8 @@ jobs:
         if: steps.check.outputs.skip != 'true'
         working-directory: python
         run: |
-          python -m pip install --upgrade pip
-          pip install build
+          # Hash-pinned build frontend (OpenSSF Scorecard Pinned-Dependencies).
+          python -m pip install --require-hashes -r "$GITHUB_WORKSPACE/.github/requirements/build.txt"
           python -m build
       - name: Publish to PyPI (Trusted Publisher)
         if: steps.check.outputs.skip != 'true'

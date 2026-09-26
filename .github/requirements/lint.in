@@ -1,0 +1,5 @@
+# Advisory lint toolchain for ci.yml lint-python. Hash-pinned for OpenSSF
+# Scorecard Pinned-Dependencies. Regenerate lint.txt with:
+#   uv pip compile lint.in --universal --python-version 3.12 --generate-hashes -o lint.txt
+ruff
+mypy
