@@ -42,8 +42,8 @@
   },
   "devDependencies": {
     "tsup": "^8.0.0",
-    "typescript": "^6.0.3",
-    "vitest": "^4.0.18"
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1"
   },
   "overrides": {
     "esbuild": "^0.28.1"
