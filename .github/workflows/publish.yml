@@ -86,10 +86,12 @@ jobs:
       - name: Python checks
         # Hash-pinned (OpenSSF Scorecard Pinned-Dependencies). Still a regular,
         # non-editable install of the built wheel, so packaging is what gets checked.
+        # The wheel path is one unquoted shell word: Scorecard drops multi-part
+        # arguments, which made "$RUNNER_TEMP"/wheels/*.whl read as unpinned.
         run: |
           python -m pip install --require-hashes -r .github/requirements/python-dev.txt
-          python -m pip wheel --no-deps -w "$RUNNER_TEMP/wheels" python/
-          python -m pip install --no-deps "$RUNNER_TEMP"/wheels/*.whl
+          python -m pip wheel --no-deps -w dist-wheels python/
+          python -m pip install --no-deps dist-wheels/*.whl
           python -c "from mnemom_types import ReputationScore, GRADE_ORDINALS, COMPONENT_WEIGHTS; print('All imports OK')"
 
   publish-npm:

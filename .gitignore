@@ -7,4 +7,6 @@ typescript/api-surface.current.txt
 __pycache__/
 *.egg-info/
 build/
+# wheel built by the publish.yml Python checks step
+dist-wheels/
 *.pyc
