@@ -2,17 +2,12 @@ import { describe, it, expect } from 'vitest';
 
 import type {
   ReputationScore,
-  ReputationComponent,
   A2ATrustExtension,
-  ReputationGateConfig,
   GateResult,
   RiskAssessment,
   ContributingFactor,
   RiskContext,
   TeamRiskAssessment,
-  TeamOutlier,
-  TeamCluster,
-  ValueDivergence,
   Team,
   TeamMember,
   TeamRosterChange,

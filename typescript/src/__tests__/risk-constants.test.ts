@@ -32,7 +32,7 @@ describe('ACTION_TYPE_PROFILES', () => {
   });
 
   it('each profile weights sum to 1.0', () => {
-    for (const [key, profile] of Object.entries(ACTION_TYPE_PROFILES)) {
+    for (const profile of Object.values(ACTION_TYPE_PROFILES)) {
       const sum =
         profile.integrity_ratio +
         profile.compliance +
